@@ -11,6 +11,14 @@ import java.util.List;
 @Entity @Table(name = "api_users")
 public class User implements UserDetails {
 
+    public User(){}
+
+    public User(String username, String password, String email){
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

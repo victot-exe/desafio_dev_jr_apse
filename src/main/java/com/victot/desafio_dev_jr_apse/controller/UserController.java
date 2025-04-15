@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController() @RequestMapping("users")
+@RestController() @RequestMapping("/users")
 public class UserController {
 
     private UserService userService;
@@ -29,7 +29,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> findUserById(@RequestParam Long id) {
         User response = userService.findById(id);
         return ResponseEntity.ok(response);
@@ -41,7 +41,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseEntity.noContent().build();

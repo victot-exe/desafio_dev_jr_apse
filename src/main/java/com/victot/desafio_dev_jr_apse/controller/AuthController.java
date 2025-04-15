@@ -1,6 +1,7 @@
 package com.victot.desafio_dev_jr_apse.controller;
 
 import com.victot.desafio_dev_jr_apse.dto.LoginRequest;
+import com.victot.desafio_dev_jr_apse.dto.UserRequest;
 import com.victot.desafio_dev_jr_apse.model.User;
 import com.victot.desafio_dev_jr_apse.model.exception.UserAlreadyExistsException;
 import com.victot.desafio_dev_jr_apse.repository.UserRepository;
@@ -28,7 +29,26 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("login")
+
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody UserRequest userDTO){
+        if(userRepository.existsByUsername(userDTO.getUsername())){
+            throw new UserAlreadyExistsException("O nome de usuário: " + userDTO.getUsername() + " não está disponível");
+        }
+
+        User user = new User();
+
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+
+        user.setPassword(encoder.encode(userDTO.getPassword()));
+        userRepository.save(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário registrado com sucesso!");
+    }
+
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -36,18 +56,6 @@ public class AuthController {
         );
 
         return ResponseEntity.ok().body("Você autenticou com sucesso!");
-    }
-
-    @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody User user){
-        if(userRepository.existsByUsername(user.getUsername())){
-            throw new UserAlreadyExistsException("O nome de usuário: " + user.getUsername() + " não está disponível");
-        }
-
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário registrado com sucesso!");
     }
 
 
