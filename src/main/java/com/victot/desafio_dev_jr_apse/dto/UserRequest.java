@@ -1,9 +1,10 @@
 package com.victot.desafio_dev_jr_apse.dto;
 
 public class UserRequest {
+
+    private String username;
     private String email;
     private String password;
-    private String username;
 
     public UserRequest() {
     }
