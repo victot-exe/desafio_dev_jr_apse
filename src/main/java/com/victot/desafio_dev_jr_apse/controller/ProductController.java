@@ -1,9 +1,12 @@
 package com.victot.desafio_dev_jr_apse.controller;
 
 import com.victot.desafio_dev_jr_apse.model.Product;
+import com.victot.desafio_dev_jr_apse.model.User;
 import com.victot.desafio_dev_jr_apse.service.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +22,23 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody @Valid Product product) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+
+        product.setCreatedBy(user);
+        product.setUpdatedBy(user);
+
         Product response = productService.save(product);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping
     public ResponseEntity<Product> updateProduct(@RequestBody @Valid Product product) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+
+        product.setUpdatedBy(user);
+
         Product response = productService.update(product);
         return ResponseEntity.ok(response);
     }

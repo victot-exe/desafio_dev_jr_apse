@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
         version = "1.0",
         contact = @Contact(name = "Victor", url = "https://github.com/victot-exe", email = "victorfarian@gmail.com")
 ))
-public class SwaggerConfiguration {
+public class SwaggerConfig {
     @Bean
     public GroupedOpenApi customOpenAPI() {
         return GroupedOpenApi.builder()
