@@ -38,19 +38,19 @@ public class Product {
 
     private String dono;
 
-    @ManyToOne
-    private User createdBy;
+//    @ManyToOne
+//    private User createdBy;
 
     @ManyToOne
     private User updatedBy;
 
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
+//    public User getCreatedBy() {
+//        return createdBy;
+//    }
+//
+//    public void setCreatedBy(User createdBy) {
+//        this.createdBy = createdBy;
+//    }
 
     public User getUpdatedBy() {
         return updatedBy;

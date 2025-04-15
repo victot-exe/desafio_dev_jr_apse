@@ -2,11 +2,12 @@ package com.victot.desafio_dev_jr_apse.controller;
 
 import com.victot.desafio_dev_jr_apse.model.User;
 import com.victot.desafio_dev_jr_apse.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+@SecurityRequirement(name = "bearerAuth")
 @RestController() @RequestMapping("/users")
 public class UserController {
 

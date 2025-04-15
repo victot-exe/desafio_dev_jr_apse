@@ -3,6 +3,7 @@ package com.victot.desafio_dev_jr_apse.controller;
 import com.victot.desafio_dev_jr_apse.model.Product;
 import com.victot.desafio_dev_jr_apse.model.User;
 import com.victot.desafio_dev_jr_apse.service.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@SecurityRequirement(name = "bearerAuth")
 @RestController @RequestMapping("/products")
 public class ProductController {
 
@@ -25,7 +26,7 @@ public class ProductController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
 
-        product.setCreatedBy(user);
+
         product.setUpdatedBy(user);
 
         Product response = productService.save(product);
